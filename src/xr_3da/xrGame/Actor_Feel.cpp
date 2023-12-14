@@ -77,13 +77,13 @@ ICF static BOOL info_trace_callback(collide::rq_result& result, LPVOID params)
 	BOOL& bOverlaped	= *(BOOL*)params;
 	if(result.O){
 		if (Level().CurrentEntity()!=result.O){	
-//			bOverlaped		= TRUE;
+			bOverlaped		= TRUE;
 			return			TRUE;//FALSE;
 		}else{
 			return			TRUE;
 		}
 	}else{
-		//ïîëó÷èòü òðåóãîëüíèê è óçíàòü åãî ìàòåðèàë
+		//Ã¯Ã®Ã«Ã³Ã·Ã¨Ã²Ã¼ Ã²Ã°Ã¥Ã³Ã£Ã®Ã«Ã¼Ã­Ã¨Ãª Ã¨ Ã³Ã§Ã­Ã Ã²Ã¼ Ã¥Ã£Ã® Ã¬Ã Ã²Ã¥Ã°Ã¨Ã Ã«
 		CDB::TRI* T		= Level().ObjectSpace.GetStaticTris()+result.element;
 		if (GMLib.GetMaterialByIdx(T->material)->Flags.is(SGameMtl::flPassable)) 
 			return TRUE;
@@ -115,7 +115,7 @@ void CActor::PickupModeUpdate()
 	if(!m_bPickupMode) return;
 	if (GameID() != GAME_SINGLE) return;
 
-	//ïîäáèðàíèå îáúåêòà
+	//Ã¯Ã®Ã¤Ã¡Ã¨Ã°Ã Ã­Ã¨Ã¥ Ã®Ã¡ÃºÃ¥ÃªÃ²Ã 
 	if(inventory().m_pTarget && inventory().m_pTarget->Useful() &&
 		m_pUsableObject && m_pUsableObject->nonscript_usable() &&
 		!Level().m_feel_deny.is_object_denied(smart_cast<CGameObject*>(inventory().m_pTarget)) )
@@ -208,7 +208,7 @@ void	CActor::PickupModeUpdate_COD	()
 
 	if (pNearestItem && m_bPickupMode)
 	{
-		//ïîäáèðàíèå îáúåêòà
+		//Ã¯Ã®Ã¤Ã¡Ã¨Ã°Ã Ã­Ã¨Ã¥ Ã®Ã¡ÃºÃ¥ÃªÃ²Ã 
 		Game().SendPickUpEvent(ID(), pNearestItem->object().ID());
 		
 		PickupModeOff();

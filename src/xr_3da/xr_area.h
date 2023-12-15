@@ -2,16 +2,20 @@
 #define __XR_AREA_H__
 
 #include "xr_collide_form.h"
-#include "xr_collide_defs.h"
+#include "../xrCDB/xr_collide_defs.h"
 
 // refs
 class ENGINE_API	ISpatial;
 class ENGINE_API	ICollisionForm;
 class ENGINE_API	CObject;
 
+#include "../xrCDB/xrXRC.h"
+#include "../xrCDB/xrcdb.h"
+
 //-----------------------------------------------------------------------------------------------------------
 //Space Area
 //-----------------------------------------------------------------------------------------------------------
+struct hdrCFORM;
 class	ENGINE_API						CObjectSpace
 {
 private:
@@ -40,7 +44,10 @@ public:
 										CObjectSpace		( );
 										~CObjectSpace		( );
 
-	void								Load				( );
+	void								Load(CDB::build_callback build_callback);
+	void								Load(LPCSTR path, LPCSTR fname, CDB::build_callback build_callback);
+	void								Load(IReader* R, CDB::build_callback build_callback);
+	void								Create(Fvector* verts, CDB::TRI* tris, const hdrCFORM& H, CDB::build_callback build_callback);
 
 	// Occluded/No
 	BOOL								RayTest				( const Fvector &start, const Fvector &dir, float range, collide::rq_target tgt, collide::ray_cache* cache, CObject* ignore_object);

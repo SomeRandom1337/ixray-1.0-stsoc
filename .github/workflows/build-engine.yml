@@ -78,7 +78,6 @@ jobs:
             ${{ runner.os }}-nuget-
 
       - name: Restore dependencies
-        if: steps.cache.outputs.cache-hit != 'true'
         run: |
           nuget restore $env:solution_name
 

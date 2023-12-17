@@ -6,6 +6,7 @@
       <img src="https://github.com/ixray-team/ixray-docs/blob/default/logo.png" alt="IX-Ray Team" width="150" height="150" />
     </a>
   </p>
+</div>
 
 Stable repository of the modernized _X-Ray_ 1.0 game engine
 

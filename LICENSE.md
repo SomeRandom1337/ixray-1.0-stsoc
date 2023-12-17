@@ -1,6 +1,13 @@
 # IX-Ray
 
-_IX-Ray_ project license information
+<div align="center">
+  <p>
+    <a href="https://github.com/ixray-team">
+      <img src="https://github.com/ixray-team/ixray-docs/blob/default/logo.png" alt="IX-Ray Team" width="150" height="150" />
+    </a>
+  </p>
+
+Stable repository of the modernized _X-Ray_ 1.0 game engine
 
 ## License details
 

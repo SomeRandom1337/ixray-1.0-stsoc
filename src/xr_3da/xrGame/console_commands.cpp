@@ -1365,57 +1365,22 @@ public:
 
 class CCC_GSpawn : public IConsole_Command {
 public:
-	CCC_GSpawn(LPCSTR N) : IConsole_Command(N) {
-	}
+    CCC_Spawn(LPCSTR N) : IConsole_Command(N) {}
 
-	virtual void Execute(LPCSTR args) override {
-		if (g_pGameLevel == nullptr) {
-			return;
-		}
+    void Execute(LPCSTR args)
+    {
+        if (!g_pGameLevel)
+            return;
 
-		auto actor = smart_cast<CActor*>(Level().CurrentEntity());
-		if (actor == nullptr) {
-			return;
-		}
+        if (!pSettings->section_exist(args))
+        {
+            Msg("! Can't find section: %s", args);
+            return;
+        }
 
-		if (!pSettings->section_exist(args)) {
-			Msg("! Can't find section: %s", args);
-			return;
-		}
-
-		Fvector3 point = point.mad(Device.vCameraPosition, Device.vCameraDirection, HUD().GetCurrentRayQuery().range);
-		auto tpGame = smart_cast<game_sv_Single*>(Level().Server->game);
-		if (tpGame != nullptr) {
-			auto item = tpGame->alife().spawn_item(args, point, 0, actor->ai_location().game_vertex_id(), u16(- 1));
-			item->cast_alife_object()->use_ai_locations(false);
-
-			auto anomaly = item->cast_anomalous_zone();
-			if (anomaly != nullptr) {
-				CShapeData::shape_def _shape{};
-				_shape.data.sphere.P.set(0.0f, 0.0f, 0.0f);
-				_shape.data.sphere.R = 3;
-				_shape.type = CShapeData::cfSphere;
-
-				anomaly->assign_shapes(&_shape, 1);
-				anomaly->m_owner_id = u32(-1);
-				anomaly->m_space_restrictor_type = RestrictionSpace::eRestrictorTypeNone;
-			}
-		}
-	}
-
-	virtual void fill_tips(vecTips& tips, u32 mode) override {
-		if (!ai().get_alife()) {
-			Msg("! ALife simulator is needed to perform specified command!");
-			return;
-		}
-
-		for (const auto& section : pSettings->sections()) {
-			if (section->line_exist("class")) {
-				tips.push_back(section->Name.c_str());
-			}
-		}
-		std::sort(tips.begin(), tips.end());
-	}
+        if (auto tpGame = smart_cast<game_sv_Single*>(Level().Server->game))
+            tpGame->alife().spawn_item(args, Actor()->Position(), Actor()->ai_location().level_vertex_id(), Actor()->ai_location().game_vertex_id(), ALife::_OBJECT_ID(-1));
+    }
 };
 
 extern CSE_Abstract* CALifeSimulator__spawn_item2(CALifeSimulator* self_, LPCSTR section, const Fvector& position, 
@@ -1446,21 +1411,6 @@ public:
 			CALifeSimulator__spawn_item2(&tpGame->alife(), args, actor->Position(), actor->ai_location().level_vertex_id(),
 				actor->ai_location().game_vertex_id(), actor->ID());
 		}
-	}
-
-	virtual void fill_tips(vecTips& tips, u32 mode) override {
-		if (!ai().get_alife()) {
-			Msg("! ALife simulator is needed to perform specified command!");
-			return;
-		}
-
-		for (const auto& section : pSettings->sections()) {
-			if (section->line_exist("cost") && section->line_exist("inv_weight")) {
-				tips.push_back(section->Name.c_str());
-			}
-		}
-
-		std::sort(tips.begin(), tips.end());
 	}
 };
 

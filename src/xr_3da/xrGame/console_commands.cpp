@@ -1365,7 +1365,7 @@ public:
 
 class CCC_GSpawn : public IConsole_Command {
 public:
-    CCC_Spawn(LPCSTR N) : IConsole_Command(N) {}
+    CCC_GSpawn(LPCSTR N) : IConsole_Command(N) {}
 
     void Execute(LPCSTR args)
     {

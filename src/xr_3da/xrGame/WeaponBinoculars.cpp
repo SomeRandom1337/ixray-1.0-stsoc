@@ -29,15 +29,18 @@ void CWeaponBinoculars::Load	(LPCSTR section)
 	HUD_SOUND::LoadSound(section, "snd_zoomin",  sndZoomIn,		SOUND_TYPE_ITEM_USING);
 	HUD_SOUND::LoadSound(section, "snd_zoomout", sndZoomOut,	SOUND_TYPE_ITEM_USING);
 	m_bVision = !!pSettings->r_bool(section,"vision_present");
+	bool allow_firing = READ_IF_EXISTS(pSettings, r_bool, section, "allow_firing", false);
 }
 
 
 bool CWeaponBinoculars::Action(s32 cmd, u32 flags) 
 {
-	switch(cmd) 
-	{
-	case kWPN_FIRE : 
-		return inherited::Action(kWPN_ZOOM, flags);
+	if (allow_firing) {
+		switch (cmd)
+		{
+		case kWPN_FIRE:
+			return inherited::Action(kWPN_ZOOM, flags);
+		}
 	}
 
 	return inherited::Action(cmd, flags);
@@ -150,9 +153,14 @@ void CWeaponBinoculars::load(IReader &input_packet)
 
 void CWeaponBinoculars::GetBriefInfo(xr_string& str_name, xr_string& icon_sect_name, xr_string& str_count)
 {
-	str_name		= NameShort();
-	str_count		= "";
-	icon_sect_name	= *cNameSect();
+	if (allow_firing) {
+		inherited::GetBriefInfo(str_name, icon_sect_name, str_count);
+	}
+	else {
+		str_name = NameShort();
+		str_count = "";
+		icon_sect_name = *cNameSect();
+	}
 }
 
 void CWeaponBinoculars::net_Relcase	(CObject *object)

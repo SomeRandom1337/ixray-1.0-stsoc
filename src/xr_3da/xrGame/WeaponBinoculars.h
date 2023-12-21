@@ -16,6 +16,7 @@ protected:
 	HUD_SOUND		sndZoomOut;
 	float			m_fRTZoomFactor; //run-time zoom factor
 	bool			m_bVision;
+	bool			allow_firing;
 public:
 					CWeaponBinoculars	(); 
 	virtual			~CWeaponBinoculars	();

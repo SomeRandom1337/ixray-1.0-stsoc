@@ -106,6 +106,14 @@ void CTorch::SwitchNightVision()
 void CTorch::SwitchNightVision(bool vision_on)
 {
 	if(!m_bNightVisionEnabled) return;
+
+	auto* pA = smart_cast<CActor*>(H_Parent());
+	if (!pA)
+		return;
+
+	auto* pActorTorch = smart_cast<CTorch*>(pA->inventory().ItemFromSlot(TORCH_SLOT));
+	if (pActorTorch && pActorTorch != this)
+		return;
 	
 	if(vision_on /*&& (m_NightVisionChargeTime > m_NightVisionRechargeTimeMin || OnClient())*/)
 	{
@@ -117,9 +125,6 @@ void CTorch::SwitchNightVision(bool vision_on)
 		m_bNightVisionOn = false;
 	}
 
-	CActor *pA = smart_cast<CActor *>(H_Parent());
-
-	if(!pA)					return;
 	bool bPlaySoundFirstPerson = (pA == Level().CurrentViewEntity());
 
 	LPCSTR disabled_names	= pSettings->r_string(cNameSect(),"disabled_maps");
@@ -180,6 +185,10 @@ void CTorch::UpdateSwitchNightVision   ()
 		m_NightVisionChargeTime			+= Device.fTimeDelta;
 		clamp(m_NightVisionChargeTime, 0.f, m_NightVisionRechargeTime);
 	}*/
+
+	auto* pA = smart_cast<CActor*>(H_Parent());
+	if (pA && m_bNightVisionOn && !pA->Cameras().GetPPEffector((EEffectorPPType)effNightvision))
+		SwitchNightVision(true);
 }
 
 
@@ -254,11 +263,12 @@ BOOL CTorch::net_Spawn(CSE_Abstract* DC)
 	glow_render->set_color	(clr);
 	glow_render->set_radius	(pUserData->r_float					("torch_definition","glow_radius"));
 
-	//âêëþ÷èòü/âûêëþ÷èòü ôîíàðèê
+	//Ð²ÐºÐ»ÑŽÑ‡Ð¸Ñ‚ÑŒ/Ð²Ñ‹ÐºÐ»ÑŽÑ‡Ð¸Ñ‚ÑŒ Ñ„Ð¾Ð½Ð°Ñ€Ð¸Ðº
 	Switch					(torch->m_active);
 	VERIFY					(!torch->m_active || (torch->ID_Parent != 0xffff));
 	
-	SwitchNightVision		(false);
+	if (m_bNightVisionEnabled)
+		m_bNightVisionOn = torch->m_nightvision_active;
 
 	m_delta_h				= PI_DIV_2-atan((range*0.5f)/_abs(TORCH_OFFSET.x));
 
@@ -412,7 +422,7 @@ void CTorch::UpdateCL()
 	if (!lanim)							return;
 
 	int						frame;
-	// âîçâðàùàåò â ôîðìàòå BGR
+	// Ð²Ð¾Ð·Ð²Ñ€Ð°Ñ‰Ð°ÐµÑ‚ Ð² Ñ„Ð¾Ñ€Ð¼Ð°Ñ‚Ðµ BGR
 	u32 clr					= lanim->CalculateBGR(Device.fTimeGlobal,frame); 
 
 	Fcolor					fclr;

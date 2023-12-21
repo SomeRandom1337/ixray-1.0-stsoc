@@ -35,7 +35,7 @@ void CWeaponBinoculars::Load	(LPCSTR section)
 
 bool CWeaponBinoculars::Action(s32 cmd, u32 flags) 
 {
-	if (allow_firing) {
+	if (!allow_firing) {
 		switch (cmd)
 		{
 		case kWPN_FIRE:

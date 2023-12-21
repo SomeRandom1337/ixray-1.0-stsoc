@@ -32,14 +32,12 @@ void CWeaponBinoculars::Load	(LPCSTR section)
 }
 
 
-bool CWeaponBinoculars::Action(LPCSTR section, s32 cmd, u32 flags) 
+bool CWeaponBinoculars::Action(s32 cmd, u32 flags) 
 {
-	if (READ_IF_EXISTS(pSettings, r_bool, section, "allow_firing", true)) {
-		switch (cmd)
-		{
-		case kWPN_FIRE:
-			return inherited::Action(kWPN_ZOOM, flags);
-		}
+	switch(cmd) 
+	{
+	case kWPN_FIRE : 
+		return inherited::Action(kWPN_ZOOM, flags);
 	}
 
 	return inherited::Action(cmd, flags);
@@ -150,16 +148,11 @@ void CWeaponBinoculars::load(IReader &input_packet)
 	load_data		(m_fRTZoomFactor,input_packet);
 }
 
-void CWeaponBinoculars::GetBriefInfo(LPCSTR section, xr_string& str_name, xr_string& icon_sect_name, xr_string& str_count)
+void CWeaponBinoculars::GetBriefInfo(xr_string& str_name, xr_string& icon_sect_name, xr_string& str_count)
 {
-	if (READ_IF_EXISTS(pSettings, r_bool, section, "allow_firing", true)) {
-		inherited::GetBriefInfo(str_name, icon_sect_name, str_count);
-	}
-	else {
-		str_name = NameShort();
-		str_count = "";
-		icon_sect_name = *cNameSect();
-	}
+	str_name		= NameShort();
+	str_count		= "";
+	icon_sect_name	= *cNameSect();
 }
 
 void CWeaponBinoculars::net_Relcase	(CObject *object)

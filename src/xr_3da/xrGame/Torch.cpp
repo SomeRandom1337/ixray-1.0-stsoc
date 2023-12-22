@@ -105,7 +105,11 @@ void CTorch::SwitchNightVision()
 
 void CTorch::SwitchNightVision(bool vision_on)
 {
-	if(!m_bNightVisionEnabled) return;
+	if (!m_bNightVisionEnabled)
+	{
+	    m_bNightVisionOn = vision_on;
+	    return;
+	}
 
 	auto* pA = smart_cast<CActor*>(H_Parent());
 	if (!pA)
@@ -270,7 +274,7 @@ BOOL CTorch::net_Spawn(CSE_Abstract* DC)
 	Switch					(torch->m_active);
 	VERIFY					(!torch->m_active || (torch->ID_Parent != 0xffff));
 	
-	if (m_bNightVisionEnabled) m_bNightVisionOn = torch->m_nightvision_active;
+	m_bNightVisionOn = torch->m_nightvision_active;
 
 	m_delta_h				= PI_DIV_2-atan((range*0.5f)/_abs(TORCH_OFFSET.x));
 

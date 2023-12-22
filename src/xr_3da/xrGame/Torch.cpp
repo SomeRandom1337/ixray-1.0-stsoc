@@ -270,8 +270,7 @@ BOOL CTorch::net_Spawn(CSE_Abstract* DC)
 	Switch					(torch->m_active);
 	VERIFY					(!torch->m_active || (torch->ID_Parent != 0xffff));
 	
-	if (m_bNightVisionEnabled)
-		m_bNightVisionOn = torch->m_nightvision_active;
+	if (m_bNightVisionEnabled) m_bNightVisionOn = torch->m_nightvision_active;
 
 	m_delta_h				= PI_DIV_2-atan((range*0.5f)/_abs(TORCH_OFFSET.x));
 

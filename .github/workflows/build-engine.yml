@@ -100,9 +100,3 @@ jobs:
         with:
           name: bin (${{ matrix.config }}) ${{ github.sha }}
           path: bin/
-
-      - name: Upload libraries
-        uses: actions/upload-artifact@v3
-        with:
-          name: lib (${{ matrix.config }}) ${{ github.sha }}
-          path: lib/

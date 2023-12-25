@@ -259,13 +259,14 @@ void CUIMainIngameWnd::Init()
 		this->AttachChild					(m_artefactPanel);	
 	}
 
+#ifndef MASTER_GOLD
 	AttachChild								(&UIStaticDiskIO);
 	UIStaticDiskIO.SetWndRect				(1000,750,16,16);
 	UIStaticDiskIO.GetUIStaticItem().SetRect(0,0,16,16);
 	UIStaticDiskIO.InitTexture				("ui\\ui_disk_io");
 	UIStaticDiskIO.SetOriginalRect			(0,0,32,32);
 	UIStaticDiskIO.SetStretchTexture		(TRUE);
-
+#endif
 
 	HUD_SOUND::LoadSound					("maingame_ui", "snd_new_contact"		, m_contactSnd		, SOUND_TYPE_IDLE);
 }
@@ -276,6 +277,7 @@ void CUIMainIngameWnd::Draw()
 #ifdef DEBUG
 	test_draw				();
 #endif
+#ifndef MASTER_GOLD
 	// show IO icon
 	bool IOActive	= (FS.dwOpenCounter>0);
 	if	(IOActive)	UIStaticDiskIO_start_time = Device.fTimeGlobal;
@@ -287,6 +289,7 @@ void CUIMainIngameWnd::Draw()
 		UIStaticDiskIO.SetColor	(color_rgba(255,255,255,alpha));
 	}
 	FS.dwOpenCounter = 0;
+#endif
 
 	if(!IsGameTypeSingle())
 	{

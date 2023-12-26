@@ -56,6 +56,9 @@ BOOL CPhysicObject::net_Spawn(CSE_Abstract* DC)
 	}
 #endif
 
+	// Ð¿Ñ€Ð¸Ð»Ð¾Ð¶Ð¸Ñ‚ÑŒ Ð½ÐµÐ±Ð¾Ð»ÑŒÑˆÑƒÑŽ ÑÐ¸Ð»Ñƒ Ð´Ð»Ñ Ñ‚Ð¾Ð³Ð¾, Ñ‡Ñ‚Ð¾Ð±Ñ‹ Ð¾Ð±ÑŠÐµÐºÑ‚ Ð½Ð°Ñ‡Ð°Ð» Ð¿Ð°Ð´Ð°Ñ‚ÑŒ
+	PPhysicsShell()->applyImpulse( Fvector().set( 0.f, -1.0f, 0.f ), 0.5f * PPhysicsShell()->getMass() );
+
 	return TRUE;
 }
 
@@ -137,8 +140,8 @@ void CPhysicObject::UpdateCL()
 	inherited::UpdateCL();
 
 #ifdef ANIMATED_PHYSICS_OBJECT_SUPPORT
-	//Åñëè íàø ôèçè÷åñêèé îáúåêò àíèìèðîâàííûé, òî 
-	//äâèãàåì îáúåêò çà àíèìàöèåé
+	//Ð•ÑÐ»Ð¸ Ð½Ð°Ñˆ Ñ„Ð¸Ð·Ð¸Ñ‡ÐµÑÐºÐ¸Ð¹ Ð¾Ð±ÑŠÐµÐºÑ‚ Ð°Ð½Ð¸Ð¼Ð¸Ñ€Ð¾Ð²Ð°Ð½Ð½Ñ‹Ð¹, Ñ‚Ð¾
+	//Ð´Ð²Ð¸Ð³Ð°ÐµÐ¼ Ð¾Ð±ÑŠÐµÐºÑ‚ Ð·Ð° Ð°Ð½Ð¸Ð¼Ð°Ñ†Ð¸ÐµÐ¹
 	if (m_pPhysicsShell->PPhysicsShellAnimator())
 	{
 		m_pPhysicsShell->PPhysicsShellAnimator()->OnFrame();

@@ -303,9 +303,9 @@ void CWeapon::Load		(LPCSTR section)
 	iMagazineSize		= pSettings->r_s32		(section,"ammo_mag_size"	);
 	
 	////////////////////////////////////////////////////
-	// дисперсия стрельбы
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 
-	//подбрасывание камеры во время отдачи
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 	camMaxAngle			= pSettings->r_float		(section,"cam_max_angle"	); 
 	camMaxAngle			= deg2rad					(camMaxAngle);
 	camRelaxSpeed		= pSettings->r_float		(section,"cam_relax_speed"	); 
@@ -359,7 +359,7 @@ void CWeapon::Load		(LPCSTR section)
 	m_fMaxRadius		= pSettings->r_float		(section,"max_radius");
 
 
-	// информация о возможных апгрейдах и их визуализации в инвентаре
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	m_eScopeStatus			 = (ALife::EWeaponAddonStatus)pSettings->r_s32(section,"scope_status");
 	m_eSilencerStatus		 = (ALife::EWeaponAddonStatus)pSettings->r_s32(section,"silencer_status");
 	m_eGrenadeLauncherStatus = (ALife::EWeaponAddonStatus)pSettings->r_s32(section,"grenade_launcher_status");
@@ -394,7 +394,7 @@ void CWeapon::Load		(LPCSTR section)
 	InitAddons();
 
 	//////////////////////////////////////
-	//время убирания оружия с уровня
+	//пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 	if(pSettings->line_exist(section,"weapon_remove_time"))
 		m_dwWeaponRemoveTime = pSettings->r_u32(section,"weapon_remove_time");
 	else
@@ -503,7 +503,7 @@ void CWeapon::net_Destroy	()
 {
 	inherited::net_Destroy	();
 
-	//удалить объекты партиклов
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	StopFlameParticles	();
 	StopFlameParticles2	();
 	StopLight			();
@@ -664,7 +664,7 @@ void CWeapon::OnH_B_Independent	(bool just_before_destroy)
 	if (m_pHUD)
 		m_pHUD->Hide			();
 
-	//завершить принудительно все процессы что шли
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅ
 	FireEnd();
 	m_bPending = false;
 	SwitchState(eIdle);
@@ -693,7 +693,7 @@ void CWeapon::OnH_A_Chield		()
 void CWeapon::OnActiveItem ()
 {
 	inherited::OnActiveItem		();
-	//если мы занружаемся и оружие было в руках
+	//пїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅ
 	SetState					(eIdle);
 	SetNextState				(eIdle);
 	if (m_pHUD) m_pHUD->Show	();
@@ -723,10 +723,10 @@ void CWeapon::UpdateCL		()
 {
 	inherited::UpdateCL		();
 	UpdateHUDAddonsVisibility();
-	//подсветка от выстрела
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	UpdateLight				();
 
-	//нарисовать партиклы
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	UpdateFlameParticles	();
 	UpdateFlameParticles2	();
 
@@ -741,11 +741,11 @@ void CWeapon::renderable_Render		()
 {
 	UpdateXForm				();
 
-	//нарисовать подсветку
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 
 	RenderLight				();	
 
-	//если мы в режиме снайперки, то сам HUD рисовать не надо
+	//пїЅпїЅпїЅпїЅ пїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅ пїЅпїЅпїЅ HUD пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅ
 	if(IsZoomed() && !IsRotatingToZoom() && ZoomTexture())
 		m_bRenderHud = false;
 	else
@@ -789,7 +789,7 @@ bool CWeapon::Action(s32 cmd, u32 flags)
 	{
 		case kWPN_FIRE: 
 			{
-				//если оружие чем-то занято, то ничего не делать
+				//пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ-пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 				{				
 					if(flags&CMD_START) 
 					{
@@ -922,7 +922,7 @@ int CWeapon::GetAmmoCurrent(bool use_item_to_spawn) const
 	int l_count = iAmmoElapsed;
 	if(!m_pCurrentInventory) return l_count;
 
-	//чтоб не делать лишних пересчетов
+	//пїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	if(m_pCurrentInventory->ModifyFrame()<=m_dwAmmoCurrentCalcFrame)
 		return l_count + iAmmoCurrent;
 
@@ -980,6 +980,9 @@ BOOL CWeapon::CheckForMisfire	()
 	float mp = GetConditionMisfireProbability();
 	if(rnd < mp)
 	{
+		if (iAmmoElapsed == 0)
+			return false;
+
 		FireEnd();
 
 		bMisfire = true;
